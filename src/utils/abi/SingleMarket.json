@@ -1,0 +1,3313 @@
+[
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "start",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "end",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAccountOrdersForSingleMarket",
+      "outputs": [
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "receiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "callbackContract",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "uiFeeReceiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "market",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "initialCollateralToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address[]",
+                  "name": "swapPath",
+                  "type": "address[]"
+                }
+              ],
+              "internalType": "struct SingleMarketOrder.Addresses",
+              "name": "addresses",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "enum SingleMarketOrder.OrderType",
+                  "name": "orderType",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "enum SingleMarketOrder.DecreasePositionSwapType",
+                  "name": "decreasePositionSwapType",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "sizeDeltaUsd",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "initialCollateralDeltaAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "triggerPrice",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "acceptablePrice",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "executionFee",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "callbackGasLimit",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "minOutputAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "updatedAtBlock",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct SingleMarketOrder.Numbers",
+              "name": "numbers",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "isLong",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "shouldUnwrapNativeToken",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isFrozen",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct SingleMarketOrder.Flags",
+              "name": "flags",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketOrder.Props[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IReferralStorage",
+          "name": "referralStorage",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "positionKeys",
+          "type": "bytes32[]"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "indexTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "longTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "shortTokenPrice",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketUtils.SingleMarketPrices[]",
+          "name": "prices",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "address",
+          "name": "uiFeeReceiver",
+          "type": "address"
+        }
+      ],
+      "name": "getAccountPositionInfoListForSingleMarket",
+      "outputs": [
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "internalType": "address",
+                      "name": "account",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "market",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "collateralToken",
+                      "type": "address"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPosition.Addresses",
+                  "name": "addresses",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "sizeInUsd",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "sizeInTokens",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "collateralAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "borrowingFactor",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "fundingFeeAmountPerSize",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "longTokenClaimableFundingAmountPerSize",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "shortTokenClaimableFundingAmountPerSize",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "increasedAtBlock",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "decreasedAtBlock",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPosition.Numbers",
+                  "name": "numbers",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "bool",
+                      "name": "isLong",
+                      "type": "bool"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPosition.Flags",
+                  "name": "flags",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SingleMarketPosition.Props",
+              "name": "position",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "internalType": "bytes32",
+                      "name": "referralCode",
+                      "type": "bytes32"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "affiliate",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "trader",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "totalRebateFactor",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "traderDiscountFactor",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "totalRebateAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "traderDiscountAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "affiliateRewardAmount",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPositionPricingUtils.PositionReferralFees",
+                  "name": "referral",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "fundingFeeAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "claimableLongTokenAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "claimableShortTokenAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "latestFundingFeeAmountPerSize",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "latestLongTokenClaimableFundingAmountPerSize",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "latestShortTokenClaimableFundingAmountPerSize",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPositionPricingUtils.PositionFundingFees",
+                  "name": "funding",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "borrowingFeeUsd",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "borrowingFeeAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "borrowingFeeReceiverFactor",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "borrowingFeeAmountForFeeReceiver",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPositionPricingUtils.PositionBorrowingFees",
+                  "name": "borrowing",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "address",
+                      "name": "uiFeeReceiver",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "uiFeeReceiverFactor",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "uiFeeAmount",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPositionPricingUtils.PositionUiFees",
+                  "name": "ui",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "min",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "max",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct Price.Props",
+                  "name": "collateralTokenPrice",
+                  "type": "tuple"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "positionFeeFactor",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "protocolFeeAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "positionFeeReceiverFactor",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "feeReceiverAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "feeAmountForPool",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "positionFeeAmountForPool",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "positionFeeAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalCostAmountExcludingFunding",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalCostAmount",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct SingleMarketPositionPricingUtils.PositionFees",
+              "name": "fees",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "int256",
+                  "name": "priceImpactUsd",
+                  "type": "int256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "priceImpactDiffUsd",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "executionPrice",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct SingleMarketGlobalReaderPricingUtils.ExecutionPriceResult",
+              "name": "executionPriceResult",
+              "type": "tuple"
+            },
+            {
+              "internalType": "int256",
+              "name": "basePnlUsd",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "uncappedBasePnlUsd",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "pnlAfterPriceImpactUsd",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct SingleMarketGlobalReaderUtils.SingleMarketPositionInfo[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "start",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "end",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAccountPositionsForSingleMarket",
+      "outputs": [
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "market",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "collateralToken",
+                  "type": "address"
+                }
+              ],
+              "internalType": "struct SingleMarketPosition.Addresses",
+              "name": "addresses",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "sizeInUsd",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "sizeInTokens",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "collateralAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "borrowingFactor",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "fundingFeeAmountPerSize",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "longTokenClaimableFundingAmountPerSize",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "shortTokenClaimableFundingAmountPerSize",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "increasedAtBlock",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "decreasedAtBlock",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct SingleMarketPosition.Numbers",
+              "name": "numbers",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "isLong",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct SingleMarketPosition.Flags",
+              "name": "flags",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketPosition.Props[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IReferralStorage",
+          "name": "referralStorage",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "positionKey",
+          "type": "bytes32"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "indexTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "longTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "shortTokenPrice",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketUtils.SingleMarketPrices",
+          "name": "prices",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "sizeDeltaUsd",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "uiFeeReceiver",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "usePositionSizeAsSizeDeltaUsd",
+          "type": "bool"
+        }
+      ],
+      "name": "getPositionInfoForSingleMarket",
+      "outputs": [
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "internalType": "address",
+                      "name": "account",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "market",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "collateralToken",
+                      "type": "address"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPosition.Addresses",
+                  "name": "addresses",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "sizeInUsd",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "sizeInTokens",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "collateralAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "borrowingFactor",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "fundingFeeAmountPerSize",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "longTokenClaimableFundingAmountPerSize",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "shortTokenClaimableFundingAmountPerSize",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "increasedAtBlock",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "decreasedAtBlock",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPosition.Numbers",
+                  "name": "numbers",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "bool",
+                      "name": "isLong",
+                      "type": "bool"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPosition.Flags",
+                  "name": "flags",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SingleMarketPosition.Props",
+              "name": "position",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "internalType": "bytes32",
+                      "name": "referralCode",
+                      "type": "bytes32"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "affiliate",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "trader",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "totalRebateFactor",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "traderDiscountFactor",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "totalRebateAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "traderDiscountAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "affiliateRewardAmount",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPositionPricingUtils.PositionReferralFees",
+                  "name": "referral",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "fundingFeeAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "claimableLongTokenAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "claimableShortTokenAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "latestFundingFeeAmountPerSize",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "latestLongTokenClaimableFundingAmountPerSize",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "latestShortTokenClaimableFundingAmountPerSize",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPositionPricingUtils.PositionFundingFees",
+                  "name": "funding",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "borrowingFeeUsd",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "borrowingFeeAmount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "borrowingFeeReceiverFactor",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "borrowingFeeAmountForFeeReceiver",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPositionPricingUtils.PositionBorrowingFees",
+                  "name": "borrowing",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "address",
+                      "name": "uiFeeReceiver",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "uiFeeReceiverFactor",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "uiFeeAmount",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketPositionPricingUtils.PositionUiFees",
+                  "name": "ui",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "min",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "max",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct Price.Props",
+                  "name": "collateralTokenPrice",
+                  "type": "tuple"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "positionFeeFactor",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "protocolFeeAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "positionFeeReceiverFactor",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "feeReceiverAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "feeAmountForPool",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "positionFeeAmountForPool",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "positionFeeAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalCostAmountExcludingFunding",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalCostAmount",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct SingleMarketPositionPricingUtils.PositionFees",
+              "name": "fees",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "int256",
+                  "name": "priceImpactUsd",
+                  "type": "int256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "priceImpactDiffUsd",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "executionPrice",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct SingleMarketGlobalReaderPricingUtils.ExecutionPriceResult",
+              "name": "executionPriceResult",
+              "type": "tuple"
+            },
+            {
+              "internalType": "int256",
+              "name": "basePnlUsd",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "uncappedBasePnlUsd",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "pnlAfterPriceImpactUsd",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct SingleMarketGlobalReaderUtils.SingleMarketPositionInfo",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "marketToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "indexToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "longToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "shortToken",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct SingleMarket.Props",
+          "name": "market",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "indexTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "longTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "shortTokenPrice",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketUtils.SingleMarketPrices",
+          "name": "prices",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "positionKey",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "sizeDeltaUsd",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPositionPnlUsdForSingleMarket",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "key",
+          "type": "address"
+        }
+      ],
+      "name": "getSingleMarket",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "marketToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "indexToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "longToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "shortToken",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct SingleMarket.Props",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "salt",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getSingleMarketBySalt",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "marketToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "indexToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "longToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "shortToken",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct SingleMarket.Props",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "key",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getSingleMarketDeposit",
+      "outputs": [
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "receiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "callbackContract",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "uiFeeReceiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "market",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "initialLongToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "initialShortToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address[]",
+                  "name": "longTokenSwapPath",
+                  "type": "address[]"
+                },
+                {
+                  "internalType": "address[]",
+                  "name": "shortTokenSwapPath",
+                  "type": "address[]"
+                }
+              ],
+              "internalType": "struct SingleMarketDeposit.Addresses",
+              "name": "addresses",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "initialLongTokenAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "initialShortTokenAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "minMarketTokens",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "updatedAtBlock",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "executionFee",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "callbackGasLimit",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct SingleMarketDeposit.Numbers",
+              "name": "numbers",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "shouldUnwrapNativeToken",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct SingleMarketDeposit.Flags",
+              "name": "flags",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketDeposit.Props",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "marketToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "indexToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "longToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "shortToken",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct SingleMarket.Props",
+          "name": "market",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "indexTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "longTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "shortTokenPrice",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketUtils.SingleMarketPrices",
+          "name": "prices",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "longTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "shortTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "uiFeeReceiver",
+          "type": "address"
+        }
+      ],
+      "name": "getSingleMarketDepositAmountOut",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "indexTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "longTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "shortTokenPrice",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketUtils.SingleMarketPrices",
+          "name": "prices",
+          "type": "tuple"
+        },
+        {
+          "internalType": "address",
+          "name": "marketKey",
+          "type": "address"
+        }
+      ],
+      "name": "getSingleMarketInfo",
+      "outputs": [
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "marketToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "indexToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "longToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "shortToken",
+                  "type": "address"
+                }
+              ],
+              "internalType": "struct SingleMarket.Props",
+              "name": "market",
+              "type": "tuple"
+            },
+            {
+              "internalType": "uint256",
+              "name": "borrowingFactorPerSecondForLongs",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "borrowingFactorPerSecondForShorts",
+              "type": "uint256"
+            },
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "long",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "short",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketUtils.PositionType",
+                  "name": "fundingFeeAmountPerSize",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "long",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "short",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketUtils.PositionType",
+                  "name": "claimableFundingAmountPerSize",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SingleMarketGlobalReaderUtils.SingleMarketBaseFundingValues",
+              "name": "baseFunding",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "longsPayShorts",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "fundingFactorPerSecond",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "int256",
+                  "name": "nextSavedFundingFactorPerSecond",
+                  "type": "int256"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "long",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "short",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketUtils.PositionType",
+                  "name": "fundingFeeAmountPerSizeDelta",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "long",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "short",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketUtils.PositionType",
+                  "name": "claimableFundingAmountPerSizeDelta",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SingleMarketUtils.GetNextFundingAmountPerSizeResult",
+              "name": "nextFunding",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "virtualPoolAmountForLongToken",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "virtualPoolAmountForShortToken",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "int256",
+                  "name": "virtualInventoryForPositions",
+                  "type": "int256"
+                }
+              ],
+              "internalType": "struct SingleMarketGlobalReaderUtils.VirtualInventory",
+              "name": "virtualInventory",
+              "type": "tuple"
+            },
+            {
+              "internalType": "bool",
+              "name": "isDisabled",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct SingleMarketGlobalReaderUtils.SingleMarketInfo",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "indexTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "longTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "shortTokenPrice",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketUtils.SingleMarketPrices[]",
+          "name": "marketPricesList",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "start",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "end",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSingleMarketInfoList",
+      "outputs": [
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "marketToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "indexToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "longToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "shortToken",
+                  "type": "address"
+                }
+              ],
+              "internalType": "struct SingleMarket.Props",
+              "name": "market",
+              "type": "tuple"
+            },
+            {
+              "internalType": "uint256",
+              "name": "borrowingFactorPerSecondForLongs",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "borrowingFactorPerSecondForShorts",
+              "type": "uint256"
+            },
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "long",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "short",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketUtils.PositionType",
+                  "name": "fundingFeeAmountPerSize",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "long",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "short",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketUtils.PositionType",
+                  "name": "claimableFundingAmountPerSize",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SingleMarketGlobalReaderUtils.SingleMarketBaseFundingValues",
+              "name": "baseFunding",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "longsPayShorts",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "fundingFactorPerSecond",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "int256",
+                  "name": "nextSavedFundingFactorPerSecond",
+                  "type": "int256"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "long",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "short",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketUtils.PositionType",
+                  "name": "fundingFeeAmountPerSizeDelta",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "long",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "longToken",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "shortToken",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct SingleMarketUtils.CollateralType",
+                      "name": "short",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct SingleMarketUtils.PositionType",
+                  "name": "claimableFundingAmountPerSizeDelta",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SingleMarketUtils.GetNextFundingAmountPerSizeResult",
+              "name": "nextFunding",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "virtualPoolAmountForLongToken",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "virtualPoolAmountForShortToken",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "int256",
+                  "name": "virtualInventoryForPositions",
+                  "type": "int256"
+                }
+              ],
+              "internalType": "struct SingleMarketGlobalReaderUtils.VirtualInventory",
+              "name": "virtualInventory",
+              "type": "tuple"
+            },
+            {
+              "internalType": "bool",
+              "name": "isDisabled",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct SingleMarketGlobalReaderUtils.SingleMarketInfo[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "marketToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "indexToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "longToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "shortToken",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct SingleMarket.Props",
+          "name": "market",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "min",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "max",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Price.Props",
+          "name": "indexTokenPrice",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bool",
+          "name": "maximize",
+          "type": "bool"
+        }
+      ],
+      "name": "getSingleMarketNetPnl",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "marketToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "indexToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "longToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "shortToken",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct SingleMarket.Props",
+          "name": "market",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "min",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "max",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Price.Props",
+          "name": "indexTokenPrice",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bool",
+          "name": "isLong",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "maximize",
+          "type": "bool"
+        }
+      ],
+      "name": "getSingleMarketOpenInterestWithPnl",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "key",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getSingleMarketOrder",
+      "outputs": [
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "receiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "callbackContract",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "uiFeeReceiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "market",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "initialCollateralToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address[]",
+                  "name": "swapPath",
+                  "type": "address[]"
+                }
+              ],
+              "internalType": "struct SingleMarketOrder.Addresses",
+              "name": "addresses",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "enum SingleMarketOrder.OrderType",
+                  "name": "orderType",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "enum SingleMarketOrder.DecreasePositionSwapType",
+                  "name": "decreasePositionSwapType",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "sizeDeltaUsd",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "initialCollateralDeltaAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "triggerPrice",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "acceptablePrice",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "executionFee",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "callbackGasLimit",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "minOutputAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "updatedAtBlock",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct SingleMarketOrder.Numbers",
+              "name": "numbers",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "isLong",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "shouldUnwrapNativeToken",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isFrozen",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct SingleMarketOrder.Flags",
+              "name": "flags",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketOrder.Props",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "marketToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "indexToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "longToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "shortToken",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct SingleMarket.Props",
+          "name": "market",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "min",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "max",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Price.Props",
+          "name": "indexTokenPrice",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bool",
+          "name": "isLong",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "maximize",
+          "type": "bool"
+        }
+      ],
+      "name": "getSingleMarketPnl",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "marketAddress",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "indexTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "longTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "shortTokenPrice",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketUtils.SingleMarketPrices",
+          "name": "prices",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bool",
+          "name": "isLong",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "maximize",
+          "type": "bool"
+        }
+      ],
+      "name": "getSingleMarketPnlToPoolFactor",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "key",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getSingleMarketPosition",
+      "outputs": [
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "market",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "collateralToken",
+                  "type": "address"
+                }
+              ],
+              "internalType": "struct SingleMarketPosition.Addresses",
+              "name": "addresses",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "sizeInUsd",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "sizeInTokens",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "collateralAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "borrowingFactor",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "fundingFeeAmountPerSize",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "longTokenClaimableFundingAmountPerSize",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "shortTokenClaimableFundingAmountPerSize",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "increasedAtBlock",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "decreasedAtBlock",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct SingleMarketPosition.Numbers",
+              "name": "numbers",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "isLong",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct SingleMarketPosition.Flags",
+              "name": "flags",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketPosition.Props",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "marketToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "indexToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "longToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "shortToken",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct SingleMarket.Props",
+          "name": "market",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "min",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "max",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Price.Props",
+          "name": "indexTokenPrice",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "min",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "max",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Price.Props",
+          "name": "longTokenPrice",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "min",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "max",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Price.Props",
+          "name": "shortTokenPrice",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "pnlFactorType",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bool",
+          "name": "maximize",
+          "type": "bool"
+        }
+      ],
+      "name": "getSingleMarketTokenPrice",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "int256",
+              "name": "poolValue",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "longPnl",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "shortPnl",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "netPnl",
+              "type": "int256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "longTokenAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "shortTokenAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "longTokenUsd",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "shortTokenUsd",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalBorrowingFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "borrowingFeePoolFactor",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "impactPoolAmount",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct SingleMarketPoolValueInfo.Props",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "key",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getSingleMarketWithdrawal",
+      "outputs": [
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "receiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "callbackContract",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "uiFeeReceiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "market",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address[]",
+                  "name": "longTokenSwapPath",
+                  "type": "address[]"
+                },
+                {
+                  "internalType": "address[]",
+                  "name": "shortTokenSwapPath",
+                  "type": "address[]"
+                }
+              ],
+              "internalType": "struct SingleMarketWithdrawal.Addresses",
+              "name": "addresses",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "marketTokenAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "minLongTokenAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "minShortTokenAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "updatedAtBlock",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "executionFee",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "callbackGasLimit",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct SingleMarketWithdrawal.Numbers",
+              "name": "numbers",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "shouldUnwrapNativeToken",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct SingleMarketWithdrawal.Flags",
+              "name": "flags",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketWithdrawal.Props",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "marketToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "indexToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "longToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "shortToken",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct SingleMarket.Props",
+          "name": "market",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "indexTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "longTokenPrice",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "min",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "max",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Price.Props",
+              "name": "shortTokenPrice",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SingleMarketUtils.SingleMarketPrices",
+          "name": "prices",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "marketTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "uiFeeReceiver",
+          "type": "address"
+        }
+      ],
+      "name": "getSingleMarketWithdrawalAmountOut",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract DataStore",
+          "name": "dataStore",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "start",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "end",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSingleMarkets",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "marketToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "indexToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "longToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "shortToken",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct SingleMarket.Props[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]

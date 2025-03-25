@@ -1,0 +1,62 @@
+[
+    {
+      "marketName": "WBTC/USD [USDC]",
+      "Totoaltvl": "$10155636.79",
+      "tvlLong": "$5276219.11",
+      "tvlShort": "$5276219.11",
+      "OpenInterestLong": "$2828654.53",
+      "OpenInterestShort": "$2110397.15",
+      "totalOi": "$4939051.68",
+      "poolPrice": "$0.95"
+    },
+    {
+      "marketName": "WETH/USD [USDC]",
+      "Totoaltvl": "$4221930.85",
+      "tvlLong": "$2125847.15",
+      "tvlShort": "$2125847.15",
+      "OpenInterestLong": "$722043.16",
+      "OpenInterestShort": "$654982.37",
+      "totalOi": "$1377025.54",
+      "poolPrice": "$0.99"
+    },
+    {
+      "marketName": "WSTETH/USD [WSTETH-USDC]",
+      "Totoaltvl": "$25118595.20",
+      "tvlLong": "$15000995.56",
+      "tvlShort": "$10059962.37",
+      "OpenInterestLong": "$10723589.52",
+      "OpenInterestShort": "$9562699.09",
+      "totalOi": "$20286288.62",
+      "poolPrice": "$1.08"
+    },
+    {
+      "marketName": "MILKTIA/USD [MILKTIA-USDC]",
+      "Totoaltvl": "$16483996.73",
+      "tvlLong": "$8914029.65",
+      "tvlShort": "$7447268.63",
+      "OpenInterestLong": "$1068647.87",
+      "OpenInterestShort": "$1568876.11",
+      "totalOi": "$2637523.98",
+      "poolPrice": "$1.04"
+    },
+    {
+      "marketName": "STMOVE/USD [STMOVE-USDC]",
+      "Totoaltvl": "$519635.72",
+      "tvlLong": "$148541.28",
+      "tvlShort": "$362849.61",
+      "OpenInterestLong": "$143613.37",
+      "OpenInterestShort": "$344795.09",
+      "totalOi": "$488408.47",
+      "poolPrice": "$1.05"
+    },
+    {
+      "marketName": "GGAVAX/USD [GGAVAX-USDC]",
+      "Totoaltvl": "$1276768.93",
+      "tvlLong": "$965006.74",
+      "tvlShort": "$326206.90",
+      "OpenInterestLong": "$294211.96",
+      "OpenInterestShort": "$261346.49",
+      "totalOi": "$555558.46",
+      "poolPrice": "$1.24"
+    }
+  ]
