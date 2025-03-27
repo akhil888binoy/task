@@ -1,165 +1,433 @@
-#[path="../utils/hash.rs"]
-mod hash;
+
 
 use alloy_primitives::{keccak256, Bytes, B256};
 use alloy_sol_types::{sol, SolValue};
-use hash::{hashData, hashString};
+use crate::utils::hash::{hash_data, hash_string};
+use once_cell::sync::Lazy;
+use alloy::{primitives::{Address}};
 
 
-pub const POSITION_IMPACT_FACTOR_KEY: B256 = hash_string("POSITION_IMPACT_FACTOR");
-pub const MAX_POSITION_IMPACT_FACTOR_KEY: B256 = hash_string("MAX_POSITION_IMPACT_FACTOR");
-pub const POSITION_IMPACT_EXPONENT_FACTOR_KEY: B256 = hash_string("POSITION_IMPACT_EXPONENT_FACTOR");
-pub const POSITION_FEE_FACTOR_KEY: B256 = hash_string("POSITION_FEE_FACTOR");
-pub const SWAP_IMPACT_FACTOR_KEY: B256 = hash_string("SWAP_IMPACT_FACTOR");
-pub const SWAP_IMPACT_EXPONENT_FACTOR_KEY: B256 = hash_string("SWAP_IMPACT_EXPONENT_FACTOR");
-pub const SWAP_FEE_FACTOR_KEY: B256 = hash_string("SWAP_FEE_FACTOR");
-pub const FEE_RECEIVER_DEPOSIT_FACTOR_KEY: B256 = hash_string("FEE_RECEIVER_DEPOSIT_FACTOR");
-pub const BORROWING_FEE_RECEIVER_FACTOR_KEY: B256 = hash_string("BORROWING_FEE_RECEIVER_FACTOR");
-pub const FEE_RECEIVER_WITHDRAWAL_FACTOR_KEY: B256 = hash_string("FEE_RECEIVER_WITHDRAWAL_FACTOR");
-pub const FEE_RECEIVER_SWAP_FACTOR_KEY: B256 = hash_string("FEE_RECEIVER_SWAP_FACTOR");
-pub const FEE_RECEIVER_POSITION_FACTOR_KEY: B256 = hash_string("FEE_RECEIVER_POSITION_FACTOR");
-pub const OPEN_INTEREST_KEY: B256 = hash_string("OPEN_INTEREST");
-pub const OPEN_INTEREST_IN_TOKENS_KEY: B256 = hash_string("OPEN_INTEREST_IN_TOKENS");
-pub const POOL_AMOUNT_KEY: B256 = hash_string("POOL_AMOUNT");
-pub const MAX_POOL_AMOUNT_FOR_DEPOSIT_KEY: B256 = hash_string("MAX_POOL_AMOUNT_FOR_DEPOSIT");
-pub const MAX_POOL_AMOUNT_KEY: B256 = hash_string("MAX_POOL_AMOUNT");
-pub const RESERVE_FACTOR_KEY: B256 = hash_string("RESERVE_FACTOR");
-pub const OPEN_INTEREST_RESERVE_FACTOR_KEY: B256 = hash_string("OPEN_INTEREST_RESERVE_FACTOR");
-pub const MAX_OPEN_INTEREST_KEY: B256 = hash_string("MAX_OPEN_INTEREST");
-pub const NONCE_KEY: B256 = hash_string("NONCE");
-pub const BORROWING_FACTOR_KEY: B256 = hash_string("BORROWING_FACTOR");
-pub const BORROWING_EXPONENT_FACTOR_KEY: B256 = hash_string("BORROWING_EXPONENT_FACTOR");
-pub const CUMULATIVE_BORROWING_FACTOR_KEY: B256 = hash_string("CUMULATIVE_BORROWING_FACTOR");
-pub const TOTAL_BORROWING_KEY: B256 = hash_string("TOTAL_BORROWING");
-pub const FUNDING_FACTOR_KEY: B256 = hash_string("FUNDING_FACTOR");
-pub const FUNDING_EXPONENT_FACTOR_KEY: B256 = hash_string("FUNDING_EXPONENT_FACTOR");
-pub const FUNDING_INCREASE_FACTOR_PER_SECOND: B256 = hash_string("FUNDING_INCREASE_FACTOR_PER_SECOND");
-pub const FUNDING_DECREASE_FACTOR_PER_SECOND: B256 = hash_string("FUNDING_DECREASE_FACTOR_PER_SECOND");
-pub const MIN_FUNDING_FACTOR_PER_SECOND: B256 = hash_string("MIN_FUNDING_FACTOR_PER_SECOND");
-pub const MAX_FUNDING_FACTOR_PER_SECOND: B256 = hash_string("MAX_FUNDING_FACTOR_PER_SECOND");
-pub const THRESHOLD_FOR_STABLE_FUNDING: B256 = hash_string("THRESHOLD_FOR_STABLE_FUNDING");
-pub const THRESHOLD_FOR_DECREASE_FUNDING: B256 = hash_string("THRESHOLD_FOR_DECREASE_FUNDING");
-pub const MAX_PNL_FACTOR_KEY: B256 = hash_string("MAX_PNL_FACTOR");
-pub const MAX_PNL_FACTOR_FOR_WITHDRAWALS_KEY: B256 = hash_string("MAX_PNL_FACTOR_FOR_WITHDRAWALS");
-pub const MAX_PNL_FACTOR_FOR_DEPOSITS_KEY: B256 = hash_string("MAX_PNL_FACTOR_FOR_DEPOSITS");
-pub const MAX_PNL_FACTOR_FOR_TRADERS_KEY: B256 = hash_string("MAX_PNL_FACTOR_FOR_TRADERS");
-pub const MAX_POSITION_IMPACT_FACTOR_FOR_LIQUIDATIONS_KEY: B256 = hash_string("MAX_POSITION_IMPACT_FACTOR_FOR_LIQUIDATIONS");
-pub const POSITION_IMPACT_POOL_AMOUNT_KEY: B256 = hash_string("POSITION_IMPACT_POOL_AMOUNT");
-pub const MIN_POSITION_IMPACT_POOL_AMOUNT_KEY: B256 = hash_string("MIN_POSITION_IMPACT_POOL_AMOUNT");
-pub const POSITION_IMPACT_POOL_DISTRIBUTION_RATE_KEY: B256 = hash_string("POSITION_IMPACT_POOL_DISTRIBUTION_RATE");
-pub const SWAP_IMPACT_POOL_AMOUNT_KEY: B256 = hash_string("SWAP_IMPACT_POOL_AMOUNT");
-pub const MIN_COLLATERAL_USD_KEY: B256 = hash_string("MIN_COLLATERAL_USD");
-pub const MIN_COLLATERAL_FACTOR_KEY: B256 = hash_string("MIN_COLLATERAL_FACTOR");
-pub const MIN_COLLATERAL_FACTOR_FOR_OPEN_INTEREST_MULTIPLIER_KEY: B256 = hash_string("MIN_COLLATERAL_FACTOR_FOR_OPEN_INTEREST_MULTIPLIER");
-pub const MIN_POSITION_SIZE_USD_KEY: B256 = hash_string("MIN_POSITION_SIZE_USD");
-pub const MAX_LEVERAGE_KEY: B256 = hash_string("MAX_LEVERAGE");
-pub const DEPOSIT_GAS_LIMIT_KEY: B256 = hash_string("DEPOSIT_GAS_LIMIT");
-pub const WITHDRAWAL_GAS_LIMIT_KEY: B256 = hash_string("WITHDRAWAL_GAS_LIMIT");
-pub const INCREASE_ORDER_GAS_LIMIT_KEY: B256 = hash_string("INCREASE_ORDER_GAS_LIMIT");
-pub const DECREASE_ORDER_GAS_LIMIT_KEY: B256 = hash_string("DECREASE_ORDER_GAS_LIMIT");
-pub const SWAP_ORDER_GAS_LIMIT_KEY: B256 = hash_string("SWAP_ORDER_GAS_LIMIT");
-pub const SINGLE_SWAP_GAS_LIMIT_KEY: B256 = hash_string("SINGLE_SWAP_GAS_LIMIT");
-pub const TOKEN_TRANSFER_GAS_LIMIT_KEY: B256 = hash_string("TOKEN_TRANSFER_GAS_LIMIT");
-pub const NATIVE_TOKEN_TRANSFER_GAS_LIMIT_KEY: B256 = hash_string("NATIVE_TOKEN_TRANSFER_GAS_LIMIT");
-pub const ESTIMATED_GAS_FEE_BASE_AMOUNT: B256 = hash_string("ESTIMATED_GAS_FEE_BASE_AMOUNT");
-pub const ESTIMATED_GAS_FEE_MULTIPLIER_FACTOR: B256 = hash_string("ESTIMATED_GAS_FEE_MULTIPLIER_FACTOR");
-pub const MARKET_LIST_KEY: B256 = hash_string("MARKET_LIST");
-pub const SINGLE_MARKET_LIST: B256 = hash_string("SINGLE_MARKET_LIST");
-pub const DYNAMIC_MARKET_LIST: B256 = hash_string("DYNAMIC_MARKET_LIST");
-pub const POSITION_LIST_KEY: B256 = hash_string("POSITION_LIST");
-pub const ACCOUNT_POSITION_LIST_KEY: B256 = hash_string("ACCOUNT_POSITION_LIST");
-pub const ORDER_LIST_KEY: B256 = hash_string("ORDER_LIST");
-pub const ACCOUNT_ORDER_LIST_KEY: B256 = hash_string("ACCOUNT_ORDER_LIST");
-pub const CLAIMABLE_FUNDING_AMOUNT: B256 = hash_string("CLAIMABLE_FUNDING_AMOUNT");
-pub const VIRTUAL_TOKEN_ID_KEY: B256 = hash_string("VIRTUAL_TOKEN_ID");
-pub const VIRTUAL_MARKET_ID_KEY: B256 = hash_string("VIRTUAL_MARKET_ID");
-pub const VIRTUAL_INVENTORY_FOR_POSITIONS_KEY: B256 = hash_string("VIRTUAL_INVENTORY_FOR_POSITIONS");
-pub const VIRTUAL_INVENTORY_FOR_SWAPS_KEY: B256 = hash_string("VIRTUAL_INVENTORY_FOR_SWAPS");
-pub const POOL_AMOUNT_ADJUSTMENT_KEY: B256 = hash_string("POOL_AMOUNT_ADJUSTMENT");
-pub const AFFILIATE_REWARD_KEY: B256 = hash_string("AFFILIATE_REWARD");
-pub const IS_MARKET_DISABLED_KEY: B256 = hash_string("IS_MARKET_DISABLED");
-pub const UI_FEE_FACTOR: B256 = hash_string("UI_FEE_FACTOR");
-pub const SUBACCOUNT_LIST_KEY: B256 = hash_string("SUBACCOUNT_LIST");
-pub const MAX_ALLOWED_SUBACCOUNT_ACTION_COUNT: B256 = hash_string("MAX_ALLOWED_SUBACCOUNT_ACTION_COUNT");
-pub const SUBACCOUNT_ACTION_COUNT: B256 = hash_string("SUBACCOUNT_ACTION_COUNT");
-pub const SUBACCOUNT_ORDER_ACTION: B256 = hash_string("SUBACCOUNT_ORDER_ACTION");
-pub const SUBACCOUNT_AUTO_TOP_UP_AMOUNT: B256 = hash_string("SUBACCOUNT_AUTO_TOP_UP_AMOUNT");
-pub const INDEX_TOKENS_LIST_KEY: B256 = hash_string("INDEX_TOKENS_LIST");
 
-// Key generation functions
+pub static POSITION_IMPACT_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("POSITION_IMPACT_FACTOR")
+});
+pub static MAX_POSITION_IMPACT_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_POSITION_IMPACT_FACTOR")
+});
+
+pub static POSITION_IMPACT_EXPONENT_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("POSITION_IMPACT_EXPONENT_FACTOR")
+});
+
+pub static POSITION_FEE_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("POSITION_FEE_FACTOR")
+});
+
+pub static SWAP_IMPACT_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("SWAP_IMPACT_FACTOR")
+});
+
+pub static SWAP_IMPACT_EXPONENT_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("SWAP_IMPACT_EXPONENT_FACTOR")
+});
+
+pub static SWAP_FEE_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("SWAP_FEE_FACTOR")
+});
+
+pub static FEE_RECEIVER_DEPOSIT_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("FEE_RECEIVER_DEPOSIT_FACTOR")
+});
+
+pub static BORROWING_FEE_RECEIVER_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("BORROWING_FEE_RECEIVER_FACTOR")
+});
+
+pub static FEE_RECEIVER_WITHDRAWAL_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("FEE_RECEIVER_WITHDRAWAL_FACTOR")
+});
+
+pub static FEE_RECEIVER_SWAP_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("FEE_RECEIVER_SWAP_FACTOR")
+});
+
+pub static FEE_RECEIVER_POSITION_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("FEE_RECEIVER_POSITION_FACTOR")
+});
+
+pub static OPEN_INTEREST_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("OPEN_INTEREST")
+});
+
+pub static OPEN_INTEREST_IN_TOKENS_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("OPEN_INTEREST_IN_TOKENS")
+});
+
+pub static POOL_AMOUNT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("POOL_AMOUNT")
+});
+
+pub static MAX_POOL_AMOUNT_FOR_DEPOSIT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_POOL_AMOUNT_FOR_DEPOSIT")
+});
+
+pub static MAX_POOL_AMOUNT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_POOL_AMOUNT")
+});
+
+pub static RESERVE_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("RESERVE_FACTOR")
+});
+
+pub static OPEN_INTEREST_RESERVE_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("OPEN_INTEREST_RESERVE_FACTOR")
+});
+
+pub static MAX_OPEN_INTEREST_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_OPEN_INTEREST")
+});
+
+pub static NONCE_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("NONCE")
+});
+
+pub static BORROWING_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("BORROWING_FACTOR")
+});
+
+pub static BORROWING_EXPONENT_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("BORROWING_EXPONENT_FACTOR")
+});
+
+pub static CUMULATIVE_BORROWING_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("CUMULATIVE_BORROWING_FACTOR")
+});
+
+pub static TOTAL_BORROWING_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("TOTAL_BORROWING")
+});
+
+pub static FUNDING_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("FUNDING_FACTOR")
+});
+
+pub static FUNDING_EXPONENT_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("FUNDING_EXPONENT_FACTOR")
+});
+
+pub static FUNDING_INCREASE_FACTOR_PER_SECOND: Lazy<B256> = Lazy::new(|| {
+    hash_string("FUNDING_INCREASE_FACTOR_PER_SECOND")
+});
+
+pub static FUNDING_DECREASE_FACTOR_PER_SECOND: Lazy<B256> = Lazy::new(|| {
+    hash_string("FUNDING_DECREASE_FACTOR_PER_SECOND")
+});
+
+pub static MIN_FUNDING_FACTOR_PER_SECOND: Lazy<B256> = Lazy::new(|| {
+    hash_string("MIN_FUNDING_FACTOR_PER_SECOND")
+});
+
+pub static MAX_FUNDING_FACTOR_PER_SECOND: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_FUNDING_FACTOR_PER_SECOND")
+});
+
+pub static THRESHOLD_FOR_STABLE_FUNDING: Lazy<B256> = Lazy::new(|| {
+    hash_string("THRESHOLD_FOR_STABLE_FUNDING")
+});
+
+pub static THRESHOLD_FOR_DECREASE_FUNDING: Lazy<B256> = Lazy::new(|| {
+    hash_string("THRESHOLD_FOR_DECREASE_FUNDING")
+});
+
+pub static MAX_PNL_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_PNL_FACTOR")
+});
+
+pub static MAX_PNL_FACTOR_FOR_WITHDRAWALS_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_PNL_FACTOR_FOR_WITHDRAWALS")
+});
+
+pub static MAX_PNL_FACTOR_FOR_DEPOSITS_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_PNL_FACTOR_FOR_DEPOSITS")
+});
+
+pub static MAX_PNL_FACTOR_FOR_TRADERS_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_PNL_FACTOR_FOR_TRADERS")
+});
+
+pub static MAX_POSITION_IMPACT_FACTOR_FOR_LIQUIDATIONS_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_POSITION_IMPACT_FACTOR_FOR_LIQUIDATIONS")
+});
+
+pub static POSITION_IMPACT_POOL_AMOUNT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("POSITION_IMPACT_POOL_AMOUNT")
+});
+
+pub static MIN_POSITION_IMPACT_POOL_AMOUNT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MIN_POSITION_IMPACT_POOL_AMOUNT")
+});
+
+pub static POSITION_IMPACT_POOL_DISTRIBUTION_RATE_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("POSITION_IMPACT_POOL_DISTRIBUTION_RATE")
+});
+
+pub static SWAP_IMPACT_POOL_AMOUNT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("SWAP_IMPACT_POOL_AMOUNT")
+});
+
+pub static MIN_COLLATERAL_USD_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MIN_COLLATERAL_USD")
+});
+
+pub static MIN_COLLATERAL_FACTOR_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MIN_COLLATERAL_FACTOR")
+});
+
+pub static MIN_COLLATERAL_FACTOR_FOR_OPEN_INTEREST_MULTIPLIER_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MIN_COLLATERAL_FACTOR_FOR_OPEN_INTEREST_MULTIPLIER")
+});
+
+pub static MIN_POSITION_SIZE_USD_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MIN_POSITION_SIZE_USD")
+});
+
+pub static MAX_LEVERAGE_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_LEVERAGE")
+});
+
+pub static DEPOSIT_GAS_LIMIT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("DEPOSIT_GAS_LIMIT")
+});
+
+pub static WITHDRAWAL_GAS_LIMIT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("WITHDRAWAL_GAS_LIMIT")
+});
+
+pub static INCREASE_ORDER_GAS_LIMIT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("INCREASE_ORDER_GAS_LIMIT")
+});
+
+pub static DECREASE_ORDER_GAS_LIMIT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("DECREASE_ORDER_GAS_LIMIT")
+});
+
+pub static SWAP_ORDER_GAS_LIMIT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("SWAP_ORDER_GAS_LIMIT")
+});
+
+pub static SINGLE_SWAP_GAS_LIMIT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("SINGLE_SWAP_GAS_LIMIT")
+});
+
+pub static TOKEN_TRANSFER_GAS_LIMIT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("TOKEN_TRANSFER_GAS_LIMIT")
+});
+
+pub static NATIVE_TOKEN_TRANSFER_GAS_LIMIT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("NATIVE_TOKEN_TRANSFER_GAS_LIMIT")
+});
+
+pub static ESTIMATED_GAS_FEE_BASE_AMOUNT: Lazy<B256> = Lazy::new(|| {
+    hash_string("ESTIMATED_GAS_FEE_BASE_AMOUNT")
+});
+
+pub static ESTIMATED_GAS_FEE_MULTIPLIER_FACTOR: Lazy<B256> = Lazy::new(|| {
+    hash_string("ESTIMATED_GAS_FEE_MULTIPLIER_FACTOR")
+});
+
+pub static MARKET_LIST_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("MARKET_LIST")
+});
+
+pub static SINGLE_MARKET_LIST: Lazy<B256> = Lazy::new(|| {
+    hash_string("SINGLE_MARKET_LIST")
+});
+
+pub static DYNAMIC_MARKET_LIST: Lazy<B256> = Lazy::new(|| {
+    hash_string("DYNAMIC_MARKET_LIST")
+});
+
+pub static POSITION_LIST_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("POSITION_LIST")
+});
+
+pub static ACCOUNT_POSITION_LIST_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("ACCOUNT_POSITION_LIST")
+});
+
+pub static ORDER_LIST_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("ORDER_LIST")
+});
+
+pub static ACCOUNT_ORDER_LIST_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("ACCOUNT_ORDER_LIST")
+});
+
+pub static CLAIMABLE_FUNDING_AMOUNT: Lazy<B256> = Lazy::new(|| {
+    hash_string("CLAIMABLE_FUNDING_AMOUNT")
+});
+
+pub static VIRTUAL_TOKEN_ID_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("VIRTUAL_TOKEN_ID")
+});
+
+pub static VIRTUAL_MARKET_ID_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("VIRTUAL_MARKET_ID")
+});
+
+pub static VIRTUAL_INVENTORY_FOR_POSITIONS_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("VIRTUAL_INVENTORY_FOR_POSITIONS")
+});
+
+pub static VIRTUAL_INVENTORY_FOR_SWAPS_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("VIRTUAL_INVENTORY_FOR_SWAPS")
+});
+
+pub static POOL_AMOUNT_ADJUSTMENT_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("POOL_AMOUNT_ADJUSTMENT")
+});
+
+pub static AFFILIATE_REWARD_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("AFFILIATE_REWARD")
+});
+
+pub static IS_MARKET_DISABLED_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("IS_MARKET_DISABLED")
+});
+
+pub static UI_FEE_FACTOR: Lazy<B256> = Lazy::new(|| {
+    hash_string("UI_FEE_FACTOR")
+});
+
+pub static SUBACCOUNT_LIST_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("SUBACCOUNT_LIST")
+});
+
+pub static MAX_ALLOWED_SUBACCOUNT_ACTION_COUNT: Lazy<B256> = Lazy::new(|| {
+    hash_string("MAX_ALLOWED_SUBACCOUNT_ACTION_COUNT")
+});
+
+pub static SUBACCOUNT_ACTION_COUNT: Lazy<B256> = Lazy::new(|| {
+    hash_string("SUBACCOUNT_ACTION_COUNT")
+});
+
+pub static SUBACCOUNT_ORDER_ACTION: Lazy<B256> = Lazy::new(|| {
+    hash_string("SUBACCOUNT_ORDER_ACTION")
+});
+
+pub static SUBACCOUNT_AUTO_TOP_UP_AMOUNT: Lazy<B256> = Lazy::new(|| {
+    hash_string("SUBACCOUNT_AUTO_TOP_UP_AMOUNT")
+});
+
+pub static INDEX_TOKENS_LIST_KEY: Lazy<B256> = Lazy::new(|| {
+    hash_string("INDEX_TOKENS_LIST")
+});
+
+
 pub fn position_impact_factor_key(market: &str, is_positive: bool) -> B256 {
-    hash_data(&["bytes32", "address", "bool"], &[POSITION_IMPACT_FACTOR_KEY, market, is_positive])
+    let market_addr: Address = market.parse()
+        .expect("Invalid market address");
+    
+    let factor_key = *POSITION_IMPACT_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr, is_positive);
+    
+    hash_data(&params)
 }
 
+//START FROM HERE /////////////////////////
+
 pub fn position_impact_factor_key_for_dynamic_market(market: &str, index_token: &str, is_positive: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[POSITION_IMPACT_FACTOR_KEY, market, index_token, is_positive]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let factor_key = *POSITION_IMPACT_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr, index_token_addr, is_positive);
+    hash_data(&params)
 }
 
 pub fn position_impact_exponent_factor_key(market: &str) -> B256 {
-    hash_data(&["bytes32", "address"], &[POSITION_IMPACT_EXPONENT_FACTOR_KEY, market])
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let factor_key = *POSITION_IMPACT_EXPONENT_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr);
+    hash_data(&params)
 }
 
 pub fn position_impact_exponent_factor_key_for_dynamic_market(market: &str, index_token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[POSITION_IMPACT_EXPONENT_FACTOR_KEY, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let factor_key = *POSITION_IMPACT_EXPONENT_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn max_position_impact_factor_key(market: &str, is_positive: bool) -> B256 {
-    hash_data(&["bytes32", "address", "bool"], &[MAX_POSITION_IMPACT_FACTOR_KEY, market, is_positive])
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let factor_key = *MAX_POSITION_IMPACT_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr, is_positive);
+    hash_data(&params)
 }
 
 pub fn max_position_impact_factor_key_for_dynamic_market(market: &str, index_token: &str, is_positive: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[MAX_POSITION_IMPACT_FACTOR_KEY, market, index_token, is_positive]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let factor_key = *MAX_POSITION_IMPACT_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr, index_token_addr, is_positive);
+    hash_data(&params)
 }
 
 pub fn position_fee_factor_key(market: &str, for_positive_impact: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[POSITION_FEE_FACTOR_KEY, market, for_positive_impact]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let factor_key = *POSITION_FEE_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr, for_positive_impact);
+    hash_data(&params)
 }
 
 pub fn position_fee_factor_key_for_dynamic_market(market: &str, index_token: &str, for_positive_impact: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[POSITION_FEE_FACTOR_KEY, market, index_token, for_positive_impact]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let factor_key = *POSITION_FEE_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr, index_token_addr, for_positive_impact);
+    hash_data(&params)
 }
 
 pub fn swap_impact_factor_key(market: &str, is_positive: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[SWAP_IMPACT_FACTOR_KEY, market, is_positive]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let factor_key = *SWAP_IMPACT_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr, is_positive);
+    hash_data(&params)
 }
 
 pub fn swap_impact_exponent_factor_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[SWAP_IMPACT_EXPONENT_FACTOR_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let factor_key = *SWAP_IMPACT_EXPONENT_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr);
+    hash_data(&params)
 }
 
 pub fn swap_fee_factor_key(market: &str, for_positive_impact: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[SWAP_FEE_FACTOR_KEY, market, for_positive_impact]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let factor_key = *SWAP_FEE_FACTOR_KEY;
+    
+    let params = (factor_key, market_addr, for_positive_impact);
+    hash_data(&params)
 }
 
 pub fn open_interest_in_tokens_key(market: &str, collateral_token: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[OPEN_INTEREST_IN_TOKENS_KEY, market, collateral_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let collateral_token_addr: Address = collateral_token.parse().expect("Invalid collateral token address");
+    let key = *OPEN_INTEREST_IN_TOKENS_KEY;
+    
+    let params = (key, market_addr, collateral_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn open_interest_in_tokens_key_for_dynamic_market(
@@ -168,45 +436,57 @@ pub fn open_interest_in_tokens_key_for_dynamic_market(
     collateral_token: &str, 
     is_long: bool
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "address", "bool"],
-        &[OPEN_INTEREST_IN_TOKENS_KEY, market, index_token, collateral_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let collateral_token_addr: Address = collateral_token.parse().expect("Invalid collateral token address");
+    let key = *OPEN_INTEREST_IN_TOKENS_KEY;
+    
+    let params = (key, market_addr, index_token_addr, collateral_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn pool_amount_key(market: &str, token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[POOL_AMOUNT_KEY, market, token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let key = *POOL_AMOUNT_KEY;
+    
+    let params = (key, market_addr, token_addr);
+    hash_data(&params)
 }
 
 pub fn pool_amount_key_for_dynamic_market(market: &str, index: &str, token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "address"],
-        &[POOL_AMOUNT_KEY, market, index, token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_addr: Address = index.parse().expect("Invalid index address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let key = *POOL_AMOUNT_KEY;
+    
+    let params = (key, market_addr, index_addr, token_addr);
+    hash_data(&params)
 }
 
 pub fn reserve_factor_key(market: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[RESERVE_FACTOR_KEY, market, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *RESERVE_FACTOR_KEY;
+    
+    let params = (key, market_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn reserve_factor_key_for_dynamic_market(market: &str, index_token: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[RESERVE_FACTOR_KEY, market, index_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *RESERVE_FACTOR_KEY;
+    
+    let params = (key, market_addr, index_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn open_interest_reserve_factor_key(market: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[OPEN_INTEREST_RESERVE_FACTOR_KEY, market, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *OPEN_INTEREST_RESERVE_FACTOR_KEY;
+    
+    let params = (key, market_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn open_interest_reserve_factor_key_for_dynamic_market(
@@ -214,17 +494,20 @@ pub fn open_interest_reserve_factor_key_for_dynamic_market(
     index_token: &str, 
     is_long: bool
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[OPEN_INTEREST_RESERVE_FACTOR_KEY, market, index_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *OPEN_INTEREST_RESERVE_FACTOR_KEY;
+    
+    let params = (key, market_addr, index_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn max_open_interest_key(market: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[MAX_OPEN_INTEREST_KEY, market, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *MAX_OPEN_INTEREST_KEY;
+    
+    let params = (key, market_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn max_open_interest_key_for_dynamic_market(
@@ -233,31 +516,38 @@ pub fn max_open_interest_key_for_dynamic_market(
     long_token_address: &str, 
     is_long: bool
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "address", "bool"],
-        &[MAX_OPEN_INTEREST_KEY, market, index_token, long_token_address, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let long_token_addr: Address = long_token_address.parse().expect("Invalid long token address");
+    let key = *MAX_OPEN_INTEREST_KEY;
+    
+    let params = (key, market_addr, index_token_addr, long_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn borrowing_factor_key(market: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[BORROWING_FACTOR_KEY, market, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *BORROWING_FACTOR_KEY;
+    
+    let params = (key, market_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn borrowing_factor_key_for_dynamic_market(market: &str, index_token: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[BORROWING_FACTOR_KEY, market, index_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *BORROWING_FACTOR_KEY;
+    
+    let params = (key, market_addr, index_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn borrowing_exponent_factor_key(market: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[BORROWING_EXPONENT_FACTOR_KEY, market, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *BORROWING_EXPONENT_FACTOR_KEY;
+    
+    let params = (key, market_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn borrowing_exponent_factor_key_for_dynamic_market(
@@ -265,17 +555,20 @@ pub fn borrowing_exponent_factor_key_for_dynamic_market(
     index_token: &str, 
     is_long: bool
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[BORROWING_EXPONENT_FACTOR_KEY, market, index_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *BORROWING_EXPONENT_FACTOR_KEY;
+    
+    let params = (key, market_addr, index_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn cumulative_borrowing_factor_key(market: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[CUMULATIVE_BORROWING_FACTOR_KEY, market, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *CUMULATIVE_BORROWING_FACTOR_KEY;
+    
+    let params = (key, market_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn cumulative_borrowing_factor_key_for_dynamic_market(
@@ -283,161 +576,192 @@ pub fn cumulative_borrowing_factor_key_for_dynamic_market(
     index_token: &str, 
     is_long: bool
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[CUMULATIVE_BORROWING_FACTOR_KEY, market, index_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *CUMULATIVE_BORROWING_FACTOR_KEY;
+    
+    let params = (key, market_addr, index_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn total_borrowing_key(market: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[TOTAL_BORROWING_KEY, market, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *TOTAL_BORROWING_KEY;
+    
+    let params = (key, market_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn total_borrowing_key_for_dynamic_market(market: &str, index_token: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[TOTAL_BORROWING_KEY, market, index_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *TOTAL_BORROWING_KEY;
+    
+    let params = (key, market_addr, index_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn funding_factor_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[FUNDING_FACTOR_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *FUNDING_FACTOR_KEY;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn funding_factor_key_for_dynamic_market(market: &str, index_token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[FUNDING_FACTOR_KEY, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *FUNDING_FACTOR_KEY;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn funding_exponent_factor_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[FUNDING_EXPONENT_FACTOR_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *FUNDING_EXPONENT_FACTOR_KEY;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn funding_exponent_factor_key_for_dynamic_market(market: &str, index_token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[FUNDING_EXPONENT_FACTOR_KEY, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *FUNDING_EXPONENT_FACTOR_KEY;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn funding_increase_factor_per_second_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[FUNDING_INCREASE_FACTOR_PER_SECOND, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *FUNDING_INCREASE_FACTOR_PER_SECOND;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn funding_increase_factor_per_second_for_dynamic_market_key(
     market: &str, 
     index_token: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[FUNDING_INCREASE_FACTOR_PER_SECOND, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *FUNDING_INCREASE_FACTOR_PER_SECOND;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn funding_decrease_factor_per_second_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[FUNDING_DECREASE_FACTOR_PER_SECOND, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *FUNDING_DECREASE_FACTOR_PER_SECOND;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn funding_decrease_factor_per_second_for_dynamic_market_key(
     market: &str, 
     index_token: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[FUNDING_DECREASE_FACTOR_PER_SECOND, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *FUNDING_DECREASE_FACTOR_PER_SECOND;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn min_funding_factor_per_second_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[MIN_FUNDING_FACTOR_PER_SECOND, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *MIN_FUNDING_FACTOR_PER_SECOND;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn min_funding_factor_per_second_for_dynamic_market_key(
     market: &str, 
     index_token: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[MIN_FUNDING_FACTOR_PER_SECOND, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *MIN_FUNDING_FACTOR_PER_SECOND;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn max_funding_factor_per_second_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[MAX_FUNDING_FACTOR_PER_SECOND, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *MAX_FUNDING_FACTOR_PER_SECOND;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn max_funding_factor_per_second_for_dynamic_market_key(
     market: &str, 
     index_token: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[MAX_FUNDING_FACTOR_PER_SECOND, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *MAX_FUNDING_FACTOR_PER_SECOND;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn threshold_for_stable_funding_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[THRESHOLD_FOR_STABLE_FUNDING, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *THRESHOLD_FOR_STABLE_FUNDING;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn threshold_for_stable_funding_key_for_dynamic_market(
     market: &str, 
     index_token: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[THRESHOLD_FOR_STABLE_FUNDING, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *THRESHOLD_FOR_STABLE_FUNDING;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn threshold_for_decrease_funding_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[THRESHOLD_FOR_DECREASE_FUNDING, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *THRESHOLD_FOR_DECREASE_FUNDING;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn threshold_for_decrease_funding_key_dynamic_market(
     market: &str, 
     index_token: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[THRESHOLD_FOR_DECREASE_FUNDING, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *THRESHOLD_FOR_DECREASE_FUNDING;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn max_pnl_factor_key(pnl_factor_type: &str, market: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "bytes32", "address", "bool"],
-        &[MAX_PNL_FACTOR_KEY, pnl_factor_type, market, is_long]
-    )
+    let pnl_factor_type_bytes: B256 = pnl_factor_type.parse().expect("Invalid pnl factor type");
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *MAX_PNL_FACTOR_KEY;
+    
+    let params = (key, pnl_factor_type_bytes, market_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn max_pnl_factor_key_for_dynamic_market(
@@ -446,90 +770,109 @@ pub fn max_pnl_factor_key_for_dynamic_market(
     index_token: &str, 
     is_long: bool
 ) -> B256 {
-    hash_data(
-        &["bytes32", "bytes32", "address", "address", "bool"],
-        &[MAX_PNL_FACTOR_KEY, pnl_factor_type, market, index_token, is_long]
-    )
+    let pnl_factor_type_bytes: B256 = pnl_factor_type.parse().expect("Invalid pnl factor type");
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *MAX_PNL_FACTOR_KEY;
+    
+    let params = (key, pnl_factor_type_bytes, market_addr, index_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn position_impact_pool_amount_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[POSITION_IMPACT_POOL_AMOUNT_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *POSITION_IMPACT_POOL_AMOUNT_KEY;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn position_impact_pool_amount_key_for_dynamic_market(market: &str, index_token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[POSITION_IMPACT_POOL_AMOUNT_KEY, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *POSITION_IMPACT_POOL_AMOUNT_KEY;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn min_position_impact_pool_amount_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[MIN_POSITION_IMPACT_POOL_AMOUNT_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *MIN_POSITION_IMPACT_POOL_AMOUNT_KEY;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn min_position_impact_pool_amount_key_for_dynamic_market(market: &str, index_token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[MIN_POSITION_IMPACT_POOL_AMOUNT_KEY, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *MIN_POSITION_IMPACT_POOL_AMOUNT_KEY;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn position_impact_pool_distribution_rate_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[POSITION_IMPACT_POOL_DISTRIBUTION_RATE_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *POSITION_IMPACT_POOL_DISTRIBUTION_RATE_KEY;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn max_position_impact_factor_for_liquidations_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[MAX_POSITION_IMPACT_FACTOR_FOR_LIQUIDATIONS_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *MAX_POSITION_IMPACT_FACTOR_FOR_LIQUIDATIONS_KEY;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn max_position_impact_factor_key_for_liquidations_for_dynamic_market(
     market: &str, 
     index_token: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[MAX_POSITION_IMPACT_FACTOR_FOR_LIQUIDATIONS_KEY, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *MAX_POSITION_IMPACT_FACTOR_FOR_LIQUIDATIONS_KEY;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn swap_impact_pool_amount_key(market: &str, token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[SWAP_IMPACT_POOL_AMOUNT_KEY, market, token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let key = *SWAP_IMPACT_POOL_AMOUNT_KEY;
+    
+    let params = (key, market_addr, token_addr);
+    hash_data(&params)
 }
 
 pub fn min_collateral_factor_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[MIN_COLLATERAL_FACTOR_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *MIN_COLLATERAL_FACTOR_KEY;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn min_collateral_factor_key_for_dynamic_market(market: &str, index_token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[MIN_COLLATERAL_FACTOR_KEY, market, index_token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *MIN_COLLATERAL_FACTOR_KEY;
+    
+    let params = (key, market_addr, index_token_addr);
+    hash_data(&params)
 }
 
 pub fn min_collateral_factor_for_open_interest(market: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "bool"],
-        &[MIN_COLLATERAL_FACTOR_FOR_OPEN_INTEREST_MULTIPLIER_KEY, market, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *MIN_COLLATERAL_FACTOR_FOR_OPEN_INTEREST_MULTIPLIER_KEY;
+    
+    let params = (key, market_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn min_collateral_factor_for_open_interest_key_for_dynamic_market(
@@ -537,17 +880,22 @@ pub fn min_collateral_factor_for_open_interest_key_for_dynamic_market(
     index_token: &str, 
     is_long: bool
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[MIN_COLLATERAL_FACTOR_FOR_OPEN_INTEREST_MULTIPLIER_KEY, market, index_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let key = *MIN_COLLATERAL_FACTOR_FOR_OPEN_INTEREST_MULTIPLIER_KEY;
+    
+    let params = (key, market_addr, index_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn claimable_funding_amount_key(market: &str, token: &str, account: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "address"],
-        &[CLAIMABLE_FUNDING_AMOUNT, market, token, account]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let key = *CLAIMABLE_FUNDING_AMOUNT;
+    
+    let params = (key, market_addr, token_addr, account_addr);
+    hash_data(&params)
 }
 
 pub fn claimable_funding_amount_key_for_dynamic_market(
@@ -556,17 +904,22 @@ pub fn claimable_funding_amount_key_for_dynamic_market(
     token: &str, 
     account: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "address", "address"],
-        &[CLAIMABLE_FUNDING_AMOUNT, market, index_token, token, account]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let key = *CLAIMABLE_FUNDING_AMOUNT;
+    
+    let params = (key, market_addr, index_token_addr, token_addr, account_addr);
+    hash_data(&params)
 }
 
 pub fn virtual_token_id_key(token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[VIRTUAL_TOKEN_ID_KEY, token]
-    )
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let key = *VIRTUAL_TOKEN_ID_KEY;
+    
+    let params = (key, token_addr);
+    hash_data(&params)
 }
 
 pub fn virtual_token_id_key_for_dynamic_market(
@@ -574,59 +927,74 @@ pub fn virtual_token_id_key_for_dynamic_market(
     index_token: &str, 
     collateral_token: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "address"],
-        &[VIRTUAL_TOKEN_ID_KEY, token, index_token, collateral_token]
-    )
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let collateral_token_addr: Address = collateral_token.parse().expect("Invalid collateral token address");
+    let key = *VIRTUAL_TOKEN_ID_KEY;
+    
+    let params = (key, token_addr, index_token_addr, collateral_token_addr);
+    hash_data(&params)
 }
 
 pub fn virtual_market_id_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[VIRTUAL_MARKET_ID_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *VIRTUAL_MARKET_ID_KEY;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn virtual_inventory_for_swaps_key(virtual_market_id: &str, token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "bytes32", "address"],
-        &[VIRTUAL_INVENTORY_FOR_SWAPS_KEY, virtual_market_id, token]
-    )
+    let virtual_market_id_bytes: B256 = virtual_market_id.parse().expect("Invalid virtual market id");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let key = *VIRTUAL_INVENTORY_FOR_SWAPS_KEY;
+    
+    let params = (key, virtual_market_id_bytes, token_addr);
+    hash_data(&params)
 }
 
 pub fn virtual_inventory_for_positions_key(virtual_token_id: &str) -> B256 {
-    hash_data(
-        &["bytes32", "bytes32"],
-        &[VIRTUAL_INVENTORY_FOR_POSITIONS_KEY, virtual_token_id]
-    )
+    let virtual_token_id_bytes: B256 = virtual_token_id.parse().expect("Invalid virtual token id");
+    let key = *VIRTUAL_INVENTORY_FOR_POSITIONS_KEY;
+    
+    let params = (key, virtual_token_id_bytes);
+    hash_data(&params)
 }
 
 pub fn pool_amount_adjustment_key(market: &str, token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[POOL_AMOUNT_ADJUSTMENT_KEY, market, token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let key = *POOL_AMOUNT_ADJUSTMENT_KEY;
+    
+    let params = (key, market_addr, token_addr);
+    hash_data(&params)
 }
 
 pub fn affiliate_reward_key(market: &str, token: &str, account: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "address"],
-        &[AFFILIATE_REWARD_KEY, market, token, account]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let key = *AFFILIATE_REWARD_KEY;
+    
+    let params = (key, market_addr, token_addr, account_addr);
+    hash_data(&params)
 }
 
 pub fn is_market_disabled_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[IS_MARKET_DISABLED_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *IS_MARKET_DISABLED_KEY;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn max_pool_amount_for_deposit_key(market: &str, token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[MAX_POOL_AMOUNT_FOR_DEPOSIT_KEY, market, token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let key = *MAX_POOL_AMOUNT_FOR_DEPOSIT_KEY;
+    
+    let params = (key, market_addr, token_addr);
+    hash_data(&params)
 }
 
 pub fn max_pool_amount_for_deposit_key_for_dynamic_market(
@@ -634,38 +1002,48 @@ pub fn max_pool_amount_for_deposit_key_for_dynamic_market(
     index_token: &str, 
     token: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "address"],
-        &[MAX_POOL_AMOUNT_FOR_DEPOSIT_KEY, market, index_token, token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let key = *MAX_POOL_AMOUNT_FOR_DEPOSIT_KEY;
+    
+    let params = (key, market_addr, index_token_addr, token_addr);
+    hash_data(&params)
 }
 
 pub fn max_pool_amount_key(market: &str, token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[MAX_POOL_AMOUNT_KEY, market, token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let key = *MAX_POOL_AMOUNT_KEY;
+    
+    let params = (key, market_addr, token_addr);
+    hash_data(&params)
 }
 
 pub fn max_pool_amount_key_for_dynamic_market(market: &str, index_token: &str, token: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "address"],
-        &[MAX_POOL_AMOUNT_KEY, market, index_token, token]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let token_addr: Address = token.parse().expect("Invalid token address");
+    let key = *MAX_POOL_AMOUNT_KEY;
+    
+    let params = (key, market_addr, index_token_addr, token_addr);
+    hash_data(&params)
 }
 
 pub fn ui_fee_factor_key(address: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[UI_FEE_FACTOR, address]
-    )
+    let address_addr: Address = address.parse().expect("Invalid address");
+    let key = *UI_FEE_FACTOR;
+    
+    let params = (key, address_addr);
+    hash_data(&params)
 }
 
 pub fn subaccount_list_key(account: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[SUBACCOUNT_LIST_KEY, account]
-    )
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let key = *SUBACCOUNT_LIST_KEY;
+    
+    let params = (key, account_addr);
+    hash_data(&params)
 }
 
 pub fn max_allowed_subaccount_action_count_key(
@@ -673,10 +1051,13 @@ pub fn max_allowed_subaccount_action_count_key(
     subaccount: &str, 
     action_type: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bytes32"],
-        &[MAX_ALLOWED_SUBACCOUNT_ACTION_COUNT, account, subaccount, action_type]
-    )
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let subaccount_addr: Address = subaccount.parse().expect("Invalid subaccount address");
+    let action_type_bytes: B256 = action_type.parse().expect("Invalid action type");
+    let key = *MAX_ALLOWED_SUBACCOUNT_ACTION_COUNT;
+    
+    let params = (key, account_addr, subaccount_addr, action_type_bytes);
+    hash_data(&params)
 }
 
 pub fn subaccount_action_count_key(
@@ -684,31 +1065,39 @@ pub fn subaccount_action_count_key(
     subaccount: &str, 
     action_type: &str
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bytes32"],
-        &[SUBACCOUNT_ACTION_COUNT, account, subaccount, action_type]
-    )
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let subaccount_addr: Address = subaccount.parse().expect("Invalid subaccount address");
+    let action_type_bytes: B256 = action_type.parse().expect("Invalid action type");
+    let key = *SUBACCOUNT_ACTION_COUNT;
+    
+    let params = (key, account_addr, subaccount_addr, action_type_bytes);
+    hash_data(&params)
 }
 
 pub fn subaccount_auto_top_up_amount_key(account: &str, subaccount: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address"],
-        &[SUBACCOUNT_AUTO_TOP_UP_AMOUNT, account, subaccount]
-    )
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let subaccount_addr: Address = subaccount.parse().expect("Invalid subaccount address");
+    let key = *SUBACCOUNT_AUTO_TOP_UP_AMOUNT;
+    
+    let params = (key, account_addr, subaccount_addr);
+    hash_data(&params)
 }
 
 pub fn index_tokens_list_key(market: &str) -> B256 {
-    hash_data(
-        &["bytes32", "address"],
-        &[INDEX_TOKENS_LIST_KEY, market]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let key = *INDEX_TOKENS_LIST_KEY;
+    
+    let params = (key, market_addr);
+    hash_data(&params)
 }
 
 pub fn open_interest_key(market: &str, collateral_token: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "bool"],
-        &[OPEN_INTEREST_KEY, market, collateral_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let collateral_token_addr: Address = collateral_token.parse().expect("Invalid collateral token address");
+    let key = *OPEN_INTEREST_KEY;
+    
+    let params = (key, market_addr, collateral_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn open_interest_key_for_dynamic_market(
@@ -717,17 +1106,22 @@ pub fn open_interest_key_for_dynamic_market(
     collateral_token: &str, 
     is_long: bool
 ) -> B256 {
-    hash_data(
-        &["bytes32", "address", "address", "address", "bool"],
-        &[OPEN_INTEREST_KEY, market, index_token, collateral_token, is_long]
-    )
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let collateral_token_addr: Address = collateral_token.parse().expect("Invalid collateral token address");
+    let key = *OPEN_INTEREST_KEY;
+    
+    let params = (key, market_addr, index_token_addr, collateral_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn hashed_position_key(account: &str, market: &str, collateral_token: &str, is_long: bool) -> B256 {
-    hash_data(
-        &["address", "address", "address", "bool"],
-        &[account, market, collateral_token, is_long]
-    )
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let collateral_token_addr: Address = collateral_token.parse().expect("Invalid collateral token address");
+    
+    let params = (account_addr, market_addr, collateral_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn hashed_position_key_for_dynamic_market(
@@ -737,44 +1131,63 @@ pub fn hashed_position_key_for_dynamic_market(
     collateral_token: &str, 
     is_long: bool
 ) -> B256 {
-    hash_data(
-        &["address", "address", "address", "address", "bool"],
-        &[account, market, index_token, collateral_token, is_long]
-    )
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let market_addr: Address = market.parse().expect("Invalid market address");
+    let index_token_addr: Address = index_token.parse().expect("Invalid index token address");
+    let collateral_token_addr: Address = collateral_token.parse().expect("Invalid collateral token address");
+    
+    let params = (account_addr, market_addr, index_token_addr, collateral_token_addr, is_long);
+    hash_data(&params)
 }
 
 pub fn order_key(data_store_address: &str, nonce: u64) -> B256 {
-    hash_data(&["address", "uint256"], &[data_store_address, nonce])
+    let data_store_addr: Address = data_store_address.parse().expect("Invalid data store address");
+    
+    let params = (data_store_addr, nonce);
+    hash_data(&params)
 }
 
 pub fn deposit_gas_limit_key(single_token: bool) -> B256 {
-    hash_data(&["bytes32", "bool"], &[DEPOSIT_GAS_LIMIT_KEY, single_token])
+    let key = *DEPOSIT_GAS_LIMIT_KEY;
+    
+    let params = (key, single_token);
+    hash_data(&params)
 }
 
 pub fn withdrawal_gas_limit_key() -> B256 {
-    hash_data(&["bytes32"], &[WITHDRAWAL_GAS_LIMIT_KEY])
+    let key = *WITHDRAWAL_GAS_LIMIT_KEY;
+    
+    hash_data(&key)
 }
 
 pub fn single_swap_gas_limit_key() -> B256 {
-    SINGLE_SWAP_GAS_LIMIT_KEY
+    *SINGLE_SWAP_GAS_LIMIT_KEY
 }
 
 pub fn increase_order_gas_limit_key() -> B256 {
-    INCREASE_ORDER_GAS_LIMIT_KEY
+    *INCREASE_ORDER_GAS_LIMIT_KEY
 }
 
 pub fn decrease_order_gas_limit_key() -> B256 {
-    DECREASE_ORDER_GAS_LIMIT_KEY
+    *DECREASE_ORDER_GAS_LIMIT_KEY
 }
 
 pub fn swap_order_gas_limit_key() -> B256 {
-    SWAP_ORDER_GAS_LIMIT_KEY
+    *SWAP_ORDER_GAS_LIMIT_KEY
 }
 
 pub fn account_order_list_key(account: &str) -> B256 {
-    hash_data(&["bytes32", "address"], &[ACCOUNT_ORDER_LIST_KEY, account])
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let key = *ACCOUNT_ORDER_LIST_KEY;
+    
+    let params = (key, account_addr);
+    hash_data(&params)
 }
 
 pub fn account_position_list_key(account: &str) -> B256 {
-    hash_data(&["bytes32", "address"], &[ACCOUNT_POSITION_LIST_KEY, account])
+    let account_addr: Address = account.parse().expect("Invalid account address");
+    let key = *ACCOUNT_POSITION_LIST_KEY;
+    
+    let params = (key, account_addr);
+    hash_data(&params)
 }

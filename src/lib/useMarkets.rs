@@ -1,76 +1,88 @@
 use alloy::{
-    network::Network,
-    providers::{Provider, ProviderBuilder},
-    transports::http::Http,
-    primitives::{Address, Bytes},
-    contract::Contract,
+    primitives::{address, Address},
+    providers::ProviderBuilder,
+    sol,
 };
-use serde::{Serialize, Deserialize};
-use std::error::Error;
-
-#[path = "../utils/getContracts.rs"]
-mod get_contracts;
-#[path = "../utils/hash.rs"]
-mod hash;
-#[path = "../utils/helpers.rs"]
-mod helpers;
-#[path = "../utils/marketEnabled.rs"]
-mod market_enabled;
-
-#[path="../config/chainConfig.rs"]
-mod chainConfig;
+use eyre::Result;
+use std::path::Path;
+use alloy::primitives::U256;
 
 
-use get_contracts::get_contract;
-use hash::hash_string;
-use market_enabled::is_market_enabled;
-use helpers::MARKETS_COUNT;
-use chainConfig::{MOVEMENT_DEVNET_CHAIN_ID , create_movement_provider};
+use crate::config::chainConfig::{create_bitlayer_provider, BITLAYER};
+use crate::utils::marketEnabled::is_market_enabled;
+use crate::utils::getContracts::get_contract;
+use crate::utils::hash::hash_string;
+use crate::utils::helpers::MARKETS_COUNT;
 
+// Generate contract bindings from ABI file
+sol!(
+    #[sol(rpc)]
+    DataStore,
+    "/home/akhil888binoy/developer/taskassignment/rust-pool-stats/src/utils/abi/DataStore.json"  // Path to your ABI file
+);
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct MarketLists {
     pub single_markets: Vec<Address>,
     pub dynamic_markets: Vec<Address>,
 }
 
-pub async fn get_markets() -> Result<MarketLists, Box<dyn Error>> {
-    // Use your pre-configured provider
-    let provider = create_movement_provider();
-    
-    // Get DataStore contract using your chain configuration
-    let contract_address = get_contract(MOVEMENT_DEVNET_CHAIN_ID , "DataStore")?;
-    let abi_bytes = include_bytes!("../utils/abi/DataStore.json");
-    let data_store = Contract::from_json(contract_address, abi_bytes)?;
+pub async fn get_markets() -> Result<MarketLists> {
+    let provider = create_bitlayer_provider();
+    let contract_address = match get_contract(BITLAYER, "DataStore"){
+        Ok(data)=>data,
+        Err(e)=> panic!("Error DataStore not found")
+    };
 
-    // Rest of your existing implementation...
-    let single_market_call = data_store
-        .method::<_, Vec<Address>>(
-            "getAddressValuesAt", 
-            (hash_string("SINGLE_MARKET_LIST"), 0_u64, MARKETS_COUNT)
-        )?;
+    println!("CONTRACT ADDRESS : {}", contract_address);
 
-    let dynamic_market_call = data_store
-        .method::<_, Vec<Address>>(
-            "getAddressValuesAt", 
-            (hash_string("DYNAMIC_MARKET_LIST"), 0_u64, MARKETS_COUNT)
-        )?;
+    // Create contract instance
+    let data_store = DataStore::new(contract_address, provider);
+    println!("DATA STORE : {:?}", data_store);
 
-    let single_markets_result = single_market_call.call().await?;
-    let dynamic_markets_result = dynamic_market_call.call().await?;
+    // Make contract calls
+    let single_market_key = hash_string("SINGLE_MARKET_LIST");
+    let dynamic_market_key = hash_string("DYNAMIC_MARKET_LIST");
 
+    println!("WORKING TILL HERE 11111");
+    println!("KEY : {}", single_market_key);
+
+
+    let single_markets_result = data_store
+    .getAddressValuesAt(
+        single_market_key, 
+        U256::from(0),
+        U256::from(MARKETS_COUNT)  
+    )
+    .call()
+    .await?
+    ._0;
+
+    println!("WORKING TILL HERE");
+    println!("SINGLE MARKET RESULT : {:?}", single_markets_result);
+
+    let dynamic_markets_result = data_store
+        .getAddressValuesAt(dynamic_market_key,  U256::from(0), 
+        U256::from(MARKETS_COUNT) )
+        .call()
+        .await?
+        ._0;
+
+    // Filter enabled markets
     let single_markets = single_markets_result
         .into_iter()
-        .filter(|&address| is_market_enabled(MOVEMENT_DEVNET_CHAIN_ID , address))
+        .filter(|&address| is_market_enabled(BITLAYER, address))
         .collect();
 
     let dynamic_markets = dynamic_markets_result
         .into_iter()
-        .filter(|&address| is_market_enabled(MOVEMENT_DEVNET_CHAIN_ID , address))
+        .filter(|&address| is_market_enabled(BITLAYER, address))
         .collect();
 
-    Ok(MarketLists {
+    let markets = MarketLists {
         single_markets,
         dynamic_markets,
-    })
+    };
+
+    Ok(markets)
 }

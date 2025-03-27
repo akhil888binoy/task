@@ -1,7 +1,5 @@
-#[path = "./chainConfig.rs"]
-mod chain_config;
 
-use chain_config::MOVEMENT_DEVNET_CHAIN_ID;
+use crate::config::chainConfig::BITLAYER;
 use std::collections::HashMap;
 use once_cell::sync::Lazy;
 use alloy::primitives::Address;
@@ -17,14 +15,13 @@ pub struct MarketParams {
 pub static SINGLE_MARKET_LIST: Lazy<HashMap<u32, Vec<Address>>> = Lazy::new(|| {
     let mut map = HashMap::new();
     map.insert(
-        MOVEMENT_DEVNET_CHAIN_ID,
+        BITLAYER,
         vec![
-            "0xD27B8001E00da3018c604d98c1d3715941214872".parse().unwrap(),
-            "0xfd59feD082378c9Ee4F57F62D1e10e2E95026c08".parse().unwrap(),
-            "0x3A7315a05Bfca36CD309266F99028cF80AD6b1C6".parse().unwrap(),
-            "0x46E715C0826123824352F4f0BCD279c815A0945E".parse().unwrap(),
-            "0xeE553341d93bcF93e77E101e15bCbe07aF7E488f".parse().unwrap(),
-            "0xD0875336db5a5b6FD70081918c559284Dc8434fA".parse().unwrap(),
+            "0xd3e7fB69556F1D3fa4ed83c18736573B31c118fA".parse().unwrap(),
+            "0xA735F6b9FC36824ADe87347C8164D71dD067D7EA".parse().unwrap(),
+            "0x140b79C9a6F501C87beD103C19AeD00B630d8d7C".parse().unwrap(),
+            "0x5257D02BcF300d0DfE51470507E7cE91B0832c9A".parse().unwrap(),
+            "0x5b356375451d023D1841C30A9ca8e8B41234Ef49".parse().unwrap(),
         ],
     );
     map
@@ -32,10 +29,10 @@ pub static SINGLE_MARKET_LIST: Lazy<HashMap<u32, Vec<Address>>> = Lazy::new(|| {
 
 pub static SINGLE_MARKET_PROPS_DATA: Lazy<HashMap<u32, HashMap<Address, MarketParams>>> = Lazy::new(|| {
     let mut result = HashMap::new();
-    let mut movement_markets = HashMap::new();
+    let mut bitlayer_markets = HashMap::new();
 
     // Market 1
-    movement_markets.insert(
+    bitlayer_markets.insert(
         "0xD27B8001E00da3018c604d98c1d3715941214872".parse().unwrap(),
         MarketParams {
             market_token: "0xD27B8001E00da3018c604d98c1d3715941214872".parse().unwrap(),
@@ -46,7 +43,7 @@ pub static SINGLE_MARKET_PROPS_DATA: Lazy<HashMap<u32, HashMap<Address, MarketPa
     );
 
     // Market 2
-    movement_markets.insert(
+    bitlayer_markets.insert(
         "0xfd59feD082378c9Ee4F57F62D1e10e2E95026c08".parse().unwrap(),
         MarketParams {
             market_token: "0xfd59feD082378c9Ee4F57F62D1e10e2E95026c08".parse().unwrap(),
@@ -57,7 +54,7 @@ pub static SINGLE_MARKET_PROPS_DATA: Lazy<HashMap<u32, HashMap<Address, MarketPa
     );
 
     // Market 3
-    movement_markets.insert(
+    bitlayer_markets.insert(
         "0x3A7315a05Bfca36CD309266F99028cF80AD6b1C6".parse().unwrap(),
         MarketParams {
             market_token: "0x3A7315a05Bfca36CD309266F99028cF80AD6b1C6".parse().unwrap(),
@@ -68,7 +65,7 @@ pub static SINGLE_MARKET_PROPS_DATA: Lazy<HashMap<u32, HashMap<Address, MarketPa
     );
 
     // Market 4
-    movement_markets.insert(
+    bitlayer_markets.insert(
         "0x46E715C0826123824352F4f0BCD279c815A0945E".parse().unwrap(),
         MarketParams {
             market_token: "0x46E715C0826123824352F4f0BCD279c815A0945E".parse().unwrap(),
@@ -79,7 +76,7 @@ pub static SINGLE_MARKET_PROPS_DATA: Lazy<HashMap<u32, HashMap<Address, MarketPa
     );
 
     // Market 5
-    movement_markets.insert(
+    bitlayer_markets.insert(
         "0xeE553341d93bcF93e77E101e15bCbe07aF7E488f".parse().unwrap(),
         MarketParams {
             market_token: "0xeE553341d93bcF93e77E101e15bCbe07aF7E488f".parse().unwrap(),
@@ -90,7 +87,7 @@ pub static SINGLE_MARKET_PROPS_DATA: Lazy<HashMap<u32, HashMap<Address, MarketPa
     );
 
     // Market 6
-    movement_markets.insert(
+    bitlayer_markets.insert(
         "0xD0875336db5a5b6FD70081918c559284Dc8434fA".parse().unwrap(),
         MarketParams {
             market_token: "0xD0875336db5a5b6FD70081918c559284Dc8434fA".parse().unwrap(),
@@ -100,6 +97,6 @@ pub static SINGLE_MARKET_PROPS_DATA: Lazy<HashMap<u32, HashMap<Address, MarketPa
         },
     );
 
-    result.insert(MOVEMENT_DEVNET_CHAIN_ID, movement_markets);
+    result.insert(BITLAYER, bitlayer_markets);
     result
 });
