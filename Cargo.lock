@@ -56,6 +56,7 @@ checksum = "f8e42c54af787e3521229df1787d7b8300910dc6d9d04d378eb593b26388bd11"
 dependencies = [
  "alloy-primitives",
  "num_enum",
+ "serde",
  "strum",
 ]
 
@@ -243,6 +244,17 @@ dependencies = [
  "serde_json",
  "thiserror 2.0.12",
  "tracing",
+]
+
+[[package]]
+name = "alloy-multicall"
+version = "0.12.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4465dd74f099aeb03b653596fd6803bd4f7a2ef43ac20198a759b402040b5e32"
+dependencies = [
+ "alloy",
+ "alloy-chains",
+ "thiserror 2.0.12",
 ]
 
 [[package]]
@@ -3010,6 +3022,7 @@ name = "rust-pool-stats"
 version = "0.1.0"
 dependencies = [
  "alloy",
+ "alloy-multicall",
  "alloy-primitives",
  "alloy-sol-types",
  "async-trait",

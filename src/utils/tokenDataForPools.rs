@@ -38,7 +38,7 @@ pub static TOKENS: Lazy<HashMap<u32, Vec<Token>>> = Lazy::new(|| {
             name: "Wrapped BTC".to_string(),
             symbol: "WBTC".to_string(),
             decimals: 18,
-            address: "0x852519aCe4F8ec20Da1B940680765ab13ac69eC0".parse().unwrap(),
+            address: "0x313ea66A1f508B5F2825A626F7a09afeaBE594E1".parse().unwrap(),
             is_wrapped: true,
             base_symbol: Some("BTC".to_string()),
             image_url: Some("https://assets.coingecko.com/coins/images/12559/small/coin-round-red.png?1604021818".to_string()),
@@ -49,7 +49,7 @@ pub static TOKENS: Lazy<HashMap<u32, Vec<Token>>> = Lazy::new(|| {
         Token {
             name: "USD Coin".to_string(),
             symbol: "USDC".to_string(),
-            address: "0x85a41e742868f3Ba0930405100DCA46FB9CAeE89".parse().unwrap(),
+            address: "0xdaA0775cbC0b25Bfae94B5F1dB5956d03761EB3c".parse().unwrap(),
             decimals: 6,
             is_stable: true,
             image_url: Some("https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png?1547042389".to_string()),
@@ -61,7 +61,7 @@ pub static TOKENS: Lazy<HashMap<u32, Vec<Token>>> = Lazy::new(|| {
             name: "Ether".to_string(),
             symbol: "ETH".to_string(),
             decimals: 18,
-            address: "0x501b9Af9d9C41c374Acc419FbeE07f284a2c351B".parse().unwrap(),
+            address: "0x82aAd3bDab1c2F2FC12EdFd8F573639bF91bdd55".parse().unwrap(),
             is_shortable: true,
             image_url: Some("https://assets.coingecko.com/coins/images/325/small/Tether-logo.png".to_string()),
             coingecko_url: Some("https://www.coingecko.com/en/coins/dai".to_string()),
@@ -72,7 +72,7 @@ pub static TOKENS: Lazy<HashMap<u32, Vec<Token>>> = Lazy::new(|| {
             name: "Solana".to_string(),
             symbol: "SOL".to_string(),
             decimals: 18,
-            address: "0x13AE4c71342Be5483bF5ab3bA29714cAA11E4ad9".parse().unwrap(),
+            address: "0xB7a11320D5B046a0dF3c4e79eba18Cf8015b98a4".parse().unwrap(),
             image_url: Some("https://assets.coingecko.com/coins/images/7598/thumb/wrapped_bitcoin_wbtc.png?1548822744".to_string()),
             coingecko_url: Some("https://www.coingecko.com/en/coins/wrapped-bitcoin".to_string()),
             explorer_url: Some("https://testnet.snowtrace.io/address/0x3Bd8e00c25B12E6E60fc8B6f1E1E2236102073Ca".to_string()),
@@ -83,7 +83,7 @@ pub static TOKENS: Lazy<HashMap<u32, Vec<Token>>> = Lazy::new(|| {
             symbol: "HYPE".to_string(),
             decimals: 18,
             is_shortable: true,
-            address: "0x46924277A232b34F6CC0bF3271C8d49Cb2a93FAF".parse().unwrap(),
+            address: "0xf81432D3031B237F7fe320896eC9BB4505D95b31".parse().unwrap(),
             image_url: Some("https://assets.coingecko.com/coins/images/7598/thumb/wrapped_bitcoin_wbtc.png?1548822744".to_string()),
             coingecko_url: Some("https://www.coingecko.com/en/coins/wrapped-bitcoin".to_string()),
             explorer_url: Some("https://testnet.snowtrace.io/address/0x3Bd8e00c25B12E6E60fc8B6f1E1E2236102073Ca".to_string()),
@@ -94,22 +94,14 @@ pub static TOKENS: Lazy<HashMap<u32, Vec<Token>>> = Lazy::new(|| {
             symbol: "PENDLE".to_string(),
             decimals: 18,
             is_shortable: true,
-            address: "0xf74955AaFe0d6EBd096a05686E7AE170CE0bb291".parse().unwrap(),
+            address: "0x50493DDF2188caa0A4194cdeF1E9144c8fFf2F45".parse().unwrap(),
             image_url: Some("https://assets.coingecko.com/coins/images/7598/thumb/wrapped_bitcoin_wbtc.png?1548822744".to_string()),
             coingecko_url: Some("https://www.coingecko.com/en/coins/wrapped-bitcoin".to_string()),
             explorer_url: Some("https://testnet.snowtrace.io/address/0x3Bd8e00c25B12E6E60fc8B6f1E1E2236102073Ca".to_string()),
             ..Default::default()
         },
-        Token {
-            name: "Optimus Market tokens".to_string(),
-            symbol: "OM".to_string(),
-            address: "<market-token-address>".parse().unwrap(),
-            decimals: 18,
-            image_url: Some("https://raw.githubusercontent.com/gmx-io/gmx-assets/main/GMX-Assets/PNG/GM_LOGO.png".to_string()),
-            is_platform_token: true,
-            ..Default::default()
-        },
     ]);
+    
     map
 });
 

@@ -13,7 +13,7 @@ use crate::utils::getContracts::get_contract;
 use crate::utils::hash::hash_string;
 use crate::utils::marketEnabled::is_market_enabled;
 use crate::utils::helpers::{get_market_full_name, MARKETS_COUNT , MarketNameParams};
-use crate::types::types::MarketsData;
+use crate::types::types::{MarketsData,Market,MarketInfo};
 use crate::model::token::Token;
 use crate::utils::getToken::get_token;
 use std::collections::{HashMap, HashSet};
@@ -31,13 +31,13 @@ sol! {
     "/home/akhil888binoy/developer/taskassignment/rust-pool-stats/src/utils/abi/DataStore.json"
 }
 
-#[derive(Debug, Clone)]
-pub struct MarketInfo {
-    pub market_token: Address,
-    pub index_token: Address,
-    pub long_token: Address,
-    pub short_token: Address,
-}
+// #[derive(Debug, Clone)]
+// pub struct MarketInfo {
+//     pub market_token: Address,
+//     pub index_token: Address,
+//     pub long_token: Address,
+//     pub short_token: Address,
+// }
 
 // #[derive(Debug, Clone)]
 // pub struct MarketNameParams1 {
@@ -47,19 +47,9 @@ pub struct MarketInfo {
 //     pub is_spot_only: bool,
 // }
 
-#[derive(Debug, Clone)]
-pub struct ProcessedMarket {
-    pub market_token_address: Address,
-    pub index_token_address: Address,
-    pub long_token_address: Address,
-    pub short_token_address: Address,
-    pub is_same_collaterals: bool,
-    pub is_spot_only: bool,
-    pub name: String,
-    pub data: String,
-}
 
-pub async fn use_single_markets(chain_id: u32) -> Result<(HashMap<String, ProcessedMarket>, Vec<String>)> {
+
+pub async fn use_single_markets(chain_id: u32) -> Result<(MarketsData, Vec<String>)> {
     let provider = create_bitlayer_provider();
     let data_store_address = get_contract(chain_id, "DataStore")?;
     let market_reader_address = get_contract(chain_id, "MarketReader")?;
@@ -116,14 +106,15 @@ pub async fn use_single_markets(chain_id: u32) -> Result<(HashMap<String, Proces
 
         // Add to processed data
         markets_data.insert(
-            market_identifier.clone(),
-            ProcessedMarket {
+            market_identifier.parse().unwrap(),
+            Market {
                 market_token_address: market.marketToken,
                 index_token_address: market.indexToken,
                 long_token_address: market.longToken,
                 short_token_address: market.shortToken,
                 is_same_collaterals,
                 is_spot_only,
+                is_dynamic: Some(false),
                 name,
                 data: String::new(),
             },

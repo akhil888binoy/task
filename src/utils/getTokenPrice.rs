@@ -9,37 +9,67 @@ use crate::{
     },
     types::types::{TokenPricesData,TokenPrices},
 };
+use serde_json::Value;
 
 #[derive(Debug, Deserialize)]
 struct PriceItem {
     token_address: String,
+    token_symbol:String, 
     min_price: String,
     max_price: String,
     updated_at: u64,
     price_decimals: u32,
 }
 
+#[derive(Debug, Deserialize)]
+struct ResponsePriceItem{
+    tokenAddress: String,
+    tokenSymbol:String,
+    minPrice: String,
+    maxPrice: String,
+    updatedAt: u64,
+    priceDecimals: u32,
+}
+#[derive(Debug, Deserialize)]
 pub struct TokenPricesDataResult {
     pub prices_data: Option<TokenPricesData>,
     pub updated_at: Option<u64>,
 }
 
 pub async fn fetch_token_recent_prices(chain_id: u32) -> Result<TokenPricesDataResult, reqwest::Error> {
-    let oracle_fetcher_url = format!("{}/prices/tickers", std::env::var("ORACLE_FETCHER_URL").expect("ORACLE_FETCHER_URL must be set"));
-    
+    let oracle_fetcher_url = format!("{}/prices/tickers", "https://oracle.alphax.finance");
     let response = reqwest::get(&oracle_fetcher_url).await?;
-    let price_items: Vec<PriceItem> = response.json().await?;
+     // If you know the structure, you can parse it into a specific type
+     let body = response.text().await?;
+     
+     let price_items: Vec<ResponsePriceItem> = serde_json::from_str(&body).unwrap();
+
+    //  let price_items:Vec<PriceItem> = vec![ 
+    //     PriceItem {
+    //         token_address: priceitems.tokenAddress,
+    //         token_symbol:, 
+    //         min_price: String,
+    //         max_price: String,
+    //         updated_at: u64,
+    //         price_decimals: u32,
+    //  }
+    //  ];
+    
+     // Or if you want to handle it as generic JSON
+     let json: Value = serde_json::from_str(&body).unwrap();
+
+    // let price_items: Vec<PriceItem> = response.json().await?;
 
     let mut result: TokenPricesData = HashMap::new();
 
     for price_item in price_items {
         // Skip if prices are empty
        
-        if price_item.min_price.is_empty() || price_item.max_price.is_empty() {
+        if price_item.minPrice.is_empty() || price_item.maxPrice.is_empty() {
             continue;
         }
 
-        let token_address = match price_item.token_address.parse::<Address>() {
+        let token_address = match price_item.tokenAddress.parse::<Address>() {
             Ok(addr) => addr,
             Err(_) => continue, // Skip invalid addresses
         };
@@ -50,8 +80,8 @@ pub async fn fetch_token_recent_prices(chain_id: u32) -> Result<TokenPricesDataR
         };
 
        
-        let min_price = U256::from_str_radix(price_item.min_price.trim(), 10).unwrap();
-        let max_price = U256::from_str_radix(price_item.max_price.trim(), 10).unwrap();
+        let min_price = U256::from_str_radix(price_item.minPrice.trim(), 10).unwrap();
+        let max_price = U256::from_str_radix(price_item.maxPrice.trim(), 10).unwrap();
 
         // Store parsed prices
         result.insert(
